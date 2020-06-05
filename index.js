@@ -23,7 +23,7 @@ app.get("/dishes", (req, res, next) => {
 })
 
 app.post("/dishes", (req, res, next) => {
-    res.end("will add the dish" + req.body.name + "with details : " + req.body.description)
+    res.end("will add the dish" + req.body.name + " with details : " + req.body.description)
 })
 
 app.put("/dishes", (req, res, next) => {
@@ -38,12 +38,6 @@ app.delete("/dishes", (req, res, next) => {
 // code for REST end point /dishes ends.
 
 // code for REST end pont /dishes/:dishId
-
-app.all("/dishes/:dishId" ,(req, res, next) => {
-    res.statusCode = 200;
-    res.setHeader("content-type" , "text/plain");
-    next();
-})
 
 app.get("/dishes/:dishId", (req, res, next) => {
     res.end(`This is will give the dish with ID : ${req.params.dishId}`);
@@ -60,7 +54,7 @@ app.put("/dishes/:dishId", (req, res, next) => {
 })
 
 app.delete("/dishes/:dishId", (req, res, next) => {
-    res.end(`deleting the dish having ID : ${req.params.dishId}`);
+    res.end(`this will delete the dish having Id : ${req.params.dishId}`)
 })
 
 // code for REST end pont /dishes/:dishId ends...
