@@ -18,17 +18,14 @@ app.use(bodyParser.json());
 // code for REST API end points /dishes and /dishes/:dishId
 
 app.use("/dishes", dishRouter);
-app.use("/dishes/:dishId", dishRouter);
 
 // code for REST API end points /promotions and /promotions/:promId
 
 app.use("/promotions", promoRouter);
-app.use("/promotions/:promId", promoRouter);
 
 // code for REST API end points /leaders and /leaders/:leaderId 
 
 app.use("/leaders", leaderRouter);
-app.use("/leaders/:leaderId", leaderRouter);
 
 // if above REST end point doesn't match the actual end point then following gets executed.
 
