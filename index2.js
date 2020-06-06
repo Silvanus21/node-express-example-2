@@ -3,12 +3,6 @@ const http = require('http');
 const morgan = require("morgan");
 const bodyParser = require("body-parser");
 
-// requiring  all the express routers 
-const dishRouter = require("./routes/dishRouter")
-const promoRouter = require("./routes/promoRouter")
-const leaderRouter = require("./routes/leaderRouter")
-const routertest = require("./routes/routertest")
-
 const hostname = 'localhost';
 const port = 3000;
 
@@ -16,22 +10,57 @@ const app = express();
 app.use(morgan("dev"));
 app.use(bodyParser.json());
 
-// code for REST API end points /dishes and /dishes/:dishId
+// code for REST end point /dishes.
 
-app.use("/dishes", dishRouter);
-app.use("/dishes/:dishId", dishRouter);
+app.all("/dishes" ,(req, res, next) => {
+    res.statusCode = 200;
+    res.setHeader("content-type" , "text/plain");
+    next();
+})
 
-// code for REST API end points /promotions and /promotions/:promId
+app.get("/dishes", (req, res, next) => {
+    res.end("This is will give all the dishes to you.");
+})
 
-app.use("/promotions", promoRouter);
-app.use("/promotions/:promId", promoRouter);
+app.post("/dishes", (req, res, next) => {
+    res.end("will add the dish" + req.body.name + " with details : " + req.body.description)
+})
 
-// code for REST API end points /leaders and /leaders/:leaderId 
+app.put("/dishes", (req, res, next) => {
+    res.statusCode = 403;
+    res.end("Not able to perform this request on /dishes");
+})
 
-app.use("/leader", leaderRouter);
-app.use("/leader/:leaderId", leaderRouter);
+app.delete("/dishes", (req, res, next) => {
+    res.end("deleting all the dishes.")
+})
 
-// if above REST end point doesn't match the actual end point then following gets executed.
+// code for REST end point /dishes ends.
+
+// code for REST end pont /dishes/:dishId
+
+app.get("/dishes/:dishId", (req, res, next) => {
+    res.end(`This is will give the dish with ID : ${req.params.dishId}`);
+})
+
+app.post("/dishes/:dishId", (req, res, next) => {
+    res.statusCode = 403
+    res.end(`post operation not supported on /dishes/ ${req.params.dishId}`)
+})
+
+app.put("/dishes/:dishId", (req, res, next) => {
+    res.write(`updating the dish : ${req.params.dishId} \n`);
+    res.end(`will update the dish : ${req.body.name} with details : ${req.body.description}`);
+})
+
+app.delete("/dishes/:dishId", (req, res, next) => {
+    res.end(`this will delete the dish having Id : ${req.params.dishId}`)
+})
+
+// code for REST end pont /dishes/:dishId ends...
+
+
+// serving the page in local host 3000
 
 app.use(express.static(__dirname + '/public'));
 
@@ -41,8 +70,6 @@ app.use((req, res, next) => {
     res.end('<html><body><h1>This is an Express Server</h1></body></html>');
 
 });
-
-// serving the page in local host 3000
 
 const server = http.createServer(app);
 
